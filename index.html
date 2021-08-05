@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess</title>
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="info__container">
+            <div class="timer timer__black">
+                <span class="text timer__text">3:00</span>
+            </div>
+            <div>
+                <p class="text text__heading">Ход белых</p>
+                <p class="text">Чтобы отменить нажатие на фигуру нажмите esc.</p>
+            </div>
+            <div class="timer timer__white">
+                <span class="text timer__text">3:00</span>
+            </div>
+        </div>
+        <div class="choose__container">
+            <div class="piece__container">
+                <div class="square square__choice"><i class="piece__to_choose fas piece fa-chess-knight"></i></div>
+                <div class="square square__choice"><i class="piece__to_choose fas piece fa-chess-bishop"></i></div>
+                <div class="square square__choice"><i class="piece__to_choose fas piece fa-chess-rook"></i></div>
+                <div class="square square__choice"><i class="piece__to_choose fas piece fa-chess-queen"></i></div>
+            </div>
+        </div>
+        <div class="game__container"></div>
+        <div class="info__container buttons__container">
+            <div class="buttons">
+                <div class="pieces__container pieces__container_white"></div>
+                <div class="buttons__wrap">
+                    <button class="btn btn__draw" id="draw__black">Предложить ничью</button>
+                    <button class="btn btn__giveUp" id="giveUp__black">Сдаться</button>
+                </div>
+            </div>
+            <button class="btn btn__rematch" disabled>Реванш</button>
+            <div class="buttons">
+                <div class="buttons__wrap">
+                    <button class="btn btn__draw" id="draw__white">Предложить ничью</button>
+                    <button class="btn btn__giveUp" id="giveUp__white">Сдаться</button>     
+                </div>
+                <div class="pieces__container pieces__container_black"></div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="js/script.js"></script>
+</body>
+
+</html>
