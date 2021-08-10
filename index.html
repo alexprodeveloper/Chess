@@ -14,14 +14,15 @@
     <div class="container">
         <div class="info__container">
             <div class="timer timer__black">
-                <span class="text timer__text">3:00</span>
+                <span class="text timer__text timer__text_black">3:00</span>
             </div>
             <div>
                 <p class="text text__heading">Ход белых</p>
                 <p class="text">Чтобы отменить нажатие на фигуру нажмите esc.</p>
+                <p class="text text__add">Добавление времени: <span class="time__add">2</span></p>
             </div>
             <div class="timer timer__white">
-                <span class="text timer__text">3:00</span>
+                <span class="text timer__text timer__text_white">3:00</span>
             </div>
         </div>
         <div class="choose__container">
@@ -37,15 +38,23 @@
             <div class="buttons">
                 <div class="pieces__container pieces__container_white"></div>
                 <div class="buttons__wrap">
-                    <button class="btn btn__draw" id="draw__black">Предложить ничью</button>
-                    <button class="btn btn__giveUp" id="giveUp__black">Сдаться</button>
+                    <button class="btn btn__draw" id="draw__black" disabled>Предложить ничью</button>
+                    <button class="btn btn__giveUp" id="giveUp__black" disabled>Сдаться</button>
                 </div>
             </div>
-            <button class="btn btn__rematch" disabled>Реванш</button>
+            <div class="rematch__wrap">
+                <button class="btn btn__rematch">Новая игра</button>
+                <label for="time" class="text">Время(мин)</label>
+                <input type="text" class="input input__time" id="time">
+                <span class="text text__error text__error_time">Доступны значения от 1 до 60</span>
+                <label for="add" class="text">Добавка(сек)</label>
+                <input type="text" class="input input__add" id="add">
+                <span class="text text__error text__error_add">Доступны значения от 0 до 30</span>
+            </div>
             <div class="buttons">
                 <div class="buttons__wrap">
-                    <button class="btn btn__draw" id="draw__white">Предложить ничью</button>
-                    <button class="btn btn__giveUp" id="giveUp__white">Сдаться</button>     
+                    <button class="btn btn__draw" id="draw__white" disabled>Предложить ничью</button>
+                    <button class="btn btn__giveUp" id="giveUp__white" disabled>Сдаться</button>     
                 </div>
                 <div class="pieces__container pieces__container_black"></div>
             </div>

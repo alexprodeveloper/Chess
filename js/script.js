@@ -1,8 +1,9 @@
 import { boardLayout } from './board.js';
 import { Timer } from './Timer.js';
 let whiteMove = true;
-let gameOver = false;
+let gameOver = true;
 let moveBlock = document.querySelector('.text__heading');
+let rematch = document.querySelector('.btn__rematch');
 let board = {
     a1: 'white-rook-first',
     b1: 'white-knight',
@@ -79,43 +80,45 @@ localStorage.setItem('board', JSON.stringify(board));
 localStorage.setItem('pieceScuare', '');
 localStorage.setItem('check', '');
 document.querySelector('.game__container').addEventListener('click', function (event) {
-    if (!gameOver) {
+    if (!gameOver && blackTimer.time > 0 && whiteTimer.time > 0) {
         if (event.target.classList.contains('square__overlay') && localStorage.getItem('pieceScuare') === '') {
             let pieceScuare = event.target.parentNode;
-            let piece = pieceScuare.lastElementChild;
-            let pieceType = piece.classList[3].split('-');
-            let pieceColor = piece.classList[2].split('__');
-            let data = pieceColor[1] + '-' + pieceType[2];
-            localStorage.setItem('pieceScuare', pieceScuare.id);
-            localStorage.setItem('piece', data);
-            if (piece.tagName === 'I') {
-                if (whiteMove && piece.classList.contains('piece__white')) {
-                    if (piece.classList.contains('fa-chess-pawn')) {
-                        setMove('pawn', pieceScuare.id, 'white');
-                    } else if (piece.classList.contains('fa-chess-knight')) {
-                        setMove('knight', pieceScuare.id, 'white');
-                    } else if (piece.classList.contains('fa-chess-bishop')) {
-                        setMove('bishop', pieceScuare.id, 'white');
-                    } else if (piece.classList.contains('fa-chess-rook')) {
-                        setMove('rook', pieceScuare.id, 'white');
-                    } else if (piece.classList.contains('fa-chess-queen')) {
-                        setMove('queen', pieceScuare.id, 'white');
-                    } else if (piece.classList.contains('fa-chess-king')) {
-                        setMove('king', pieceScuare.id, 'white');
-                    }
-                } else if (!whiteMove && piece.classList.contains('piece__black')) {
-                    if (piece.classList.contains('fa-chess-pawn')) {
-                        setMove('pawn', pieceScuare.id, 'black');
-                    } else if (piece.classList.contains('fa-chess-knight')) {
-                        setMove('knight', pieceScuare.id, 'black');
-                    } else if (piece.classList.contains('fa-chess-bishop')) {
-                        setMove('bishop', pieceScuare.id, 'black');
-                    } else if (piece.classList.contains('fa-chess-rook')) {
-                        setMove('rook', pieceScuare.id, 'black');
-                    } else if (piece.classList.contains('fa-chess-queen')) {
-                        setMove('queen', pieceScuare.id, 'black');
-                    } else if (piece.classList.contains('fa-chess-king')) {
-                        setMove('king', pieceScuare.id, 'black');
+            if (pieceScuare.lastChild.tagName === 'I') {
+                let piece = pieceScuare.lastElementChild;
+                let pieceType = piece.classList[3].split('-');
+                let pieceColor = piece.classList[2].split('__');
+                let data = pieceColor[1] + '-' + pieceType[2];
+                localStorage.setItem('pieceScuare', pieceScuare.id);
+                localStorage.setItem('piece', data);
+                if (piece.tagName === 'I') {
+                    if (whiteMove && piece.classList.contains('piece__white')) {
+                        if (piece.classList.contains('fa-chess-pawn')) {
+                            setMove('pawn', pieceScuare.id, 'white');
+                        } else if (piece.classList.contains('fa-chess-knight')) {
+                            setMove('knight', pieceScuare.id, 'white');
+                        } else if (piece.classList.contains('fa-chess-bishop')) {
+                            setMove('bishop', pieceScuare.id, 'white');
+                        } else if (piece.classList.contains('fa-chess-rook')) {
+                            setMove('rook', pieceScuare.id, 'white');
+                        } else if (piece.classList.contains('fa-chess-queen')) {
+                            setMove('queen', pieceScuare.id, 'white');
+                        } else if (piece.classList.contains('fa-chess-king')) {
+                            setMove('king', pieceScuare.id, 'white');
+                        }
+                    } else if (!whiteMove && piece.classList.contains('piece__black')) {
+                        if (piece.classList.contains('fa-chess-pawn')) {
+                            setMove('pawn', pieceScuare.id, 'black');
+                        } else if (piece.classList.contains('fa-chess-knight')) {
+                            setMove('knight', pieceScuare.id, 'black');
+                        } else if (piece.classList.contains('fa-chess-bishop')) {
+                            setMove('bishop', pieceScuare.id, 'black');
+                        } else if (piece.classList.contains('fa-chess-rook')) {
+                            setMove('rook', pieceScuare.id, 'black');
+                        } else if (piece.classList.contains('fa-chess-queen')) {
+                            setMove('queen', pieceScuare.id, 'black');
+                        } else if (piece.classList.contains('fa-chess-king')) {
+                            setMove('king', pieceScuare.id, 'black');
+                        }
                     }
                 }
             }
@@ -179,7 +182,7 @@ document.querySelector('.game__container').addEventListener('click', function (e
                                 for (let piece of pieces) {
                                     piece.classList.add('piece__white');
                                 }
-                                choiceBlock.addEventListener('click', function(event) {
+                                choiceBlock.addEventListener('click', function (event) {
                                     if (event.target.classList.contains('piece__to_choose') || event.target.classList.contains('square__choice')) {
                                         let piece = event.target;
                                         if (event.target.classList.contains('square__choice')) {
@@ -221,7 +224,7 @@ document.querySelector('.game__container').addEventListener('click', function (e
                                 for (let piece of pieces) {
                                     piece.classList.add('piece__black');
                                 }
-                                choiceBlock.addEventListener('click', function(event) {
+                                choiceBlock.addEventListener('click', function (event) {
                                     if (event.target.classList.contains('piece__to_choose') || event.target.classList.contains('square__choice')) {
                                         let piece = event.target;
                                         if (event.target.classList.contains('square__choice')) {
@@ -264,7 +267,7 @@ document.querySelector('.game__container').addEventListener('click', function (e
                             }
                         }
                         board[moves[index]] = data;
-                    } 
+                    }
                     let audio = new Audio('../sounds/move-sound.mp3');
                     audio.play();
                     localStorage.setItem('lastMove', startId + moves[index] + data);
@@ -272,6 +275,13 @@ document.querySelector('.game__container').addEventListener('click', function (e
                     isCheck(whiteMove);
                     renderInfo();
                     whiteMove = !whiteMove;
+                    if (whiteMove) {
+                        blackTimer.stop();
+                        whiteTimer.start();
+                    } else if (!whiteMove) {
+                        whiteTimer.stop();
+                        blackTimer.start();
+                    }
                     let drawBtns = Array.from(document.querySelectorAll('.btn__draw_active'));
                     if (drawBtns.length > 0) {
                         for (let i = 0; i < drawBtns.length; i++) {
@@ -283,6 +293,14 @@ document.querySelector('.game__container').addEventListener('click', function (e
                 }
             }
         }
+    } else if (!gameOver && blackTimer.time === 0) {
+        gameOver = true;
+        moveBlock.textContent = 'Белые победили';
+        rematch.removeAttribute('disabled');
+    } else if (!gameOver && whiteTimer.time === 0) {
+        gameOver = true;
+        moveBlock.textContent = 'Черные победили';
+        rematch.removeAttribute('disabled');
     }
 });
 
@@ -357,7 +375,7 @@ function filterPieces(pieces) {
     let queen = getCurrentPieceType(pieces, 'queen');
     let result = [];
     result.push(pawns, knights, bishops, rooks, queen);
-    result = result.filter(function(res) {
+    result = result.filter(function (res) {
         if (res) {
             return res;
         }
@@ -366,7 +384,7 @@ function filterPieces(pieces) {
 }
 
 function getCurrentPieceType(pieces, type) {
-    let result = pieces.filter(function(piece) {
+    let result = pieces.filter(function (piece) {
         let data = piece.split('-')
         if (data[1] === type) {
             return piece;
@@ -402,7 +420,7 @@ function move(pieceType, id, color) {
                 if (lastMoveInfo.includes('black-pawn')) {
                     let numericId = convertToNumbers(id);
                     let neighbors = [convertToField((parseInt(numericId[0]) + 1) + numericId[1]), convertToField((parseInt(numericId[0]) - 1) + numericId[1])];
-                    neighbors = neighbors.filter(function (neighbor) { 
+                    neighbors = neighbors.filter(function (neighbor) {
                         if (neighbor) {
                             return neighbor;
                         }
@@ -436,7 +454,7 @@ function move(pieceType, id, color) {
                 if (lastMoveInfo.includes('white-pawn')) {
                     let numericId = convertToNumbers(id);
                     let neighbors = [convertToField((parseInt(numericId[0]) + 1) + numericId[1]), convertToField((parseInt(numericId[0]) - 1) + numericId[1])];
-                    neighbors = neighbors.filter(function (neighbor) { 
+                    neighbors = neighbors.filter(function (neighbor) {
                         if (neighbor) {
                             return neighbor;
                         }
@@ -531,7 +549,7 @@ function move(pieceType, id, color) {
 
     if (checkInfo[0] === true && result.length > 0 && pieceType !== 'king') {
         result = checkValidate(result, idClone, color);
-    } 
+    }
     else if (result.length > 0 && pieceType !== 'king') {
         result = checkValidate(result, idClone, color);
     }
@@ -654,7 +672,7 @@ function isShortCastlingPossible(color, allMoves) {
         if (board.e1 === 'white-king-first' && board.h1 === 'white-rook-first' && board.f1 === '' && board.g1 === '') {
             if (!allMoves.includes('e1') && !allMoves.includes('f1') && !allMoves.includes('g1')) {
                 return true;
-            }   
+            }
         }
     } else if (color === 'black') {
         if (board.e8 === 'black-king-first' && board.h8 === 'black-rook-first' && board.f8 === '' && board.g8 === '') {
@@ -931,7 +949,7 @@ function move2(pieceType, id, color) {
         if (color === 'white') {
             let iter = iteration(id, '+');
             result = result.concat(iter);
-        } else if (color === 'black') {            
+        } else if (color === 'black') {
             let iter = iteration(id, '-');
             result = result.concat(iter)
         }
@@ -959,7 +977,7 @@ function move2(pieceType, id, color) {
         result = getRookMoves(id, color, true);
     } else if (pieceType === 'queen') {
         result = getQueenMoves(id, color, true);
-    } 
+    }
     else if (pieceType === 'king') {
         id = convertToNumbers(id);
         let id1 = parseInt(id[0]);
@@ -1004,7 +1022,7 @@ function removeClassFromCollection(collection, className) {
     }
 }
 
-document.querySelector('.buttons__container').addEventListener('click', function(event) {
+document.querySelector('.buttons__container').addEventListener('click', function (event) {
     let element = event.target;
     if (element.classList.contains('btn')) {
         if (element.classList.contains('btn__draw')) {
@@ -1016,6 +1034,8 @@ document.querySelector('.buttons__container').addEventListener('click', function
                 gameOver = true;
                 moveBlock.textContent = 'Ничья';
                 removeDots();
+                blackTimer.stop();
+                whiteTimer.stop();
             }
         } else if (element.classList.contains('btn__giveUp')) {
             let isGivingUp = confirm('Вы действительно хотите сдаться?');
@@ -1026,6 +1046,8 @@ document.querySelector('.buttons__container').addEventListener('click', function
                 gameOver = true;
                 moveBlock.textContent = (element.id === 'giveUp__white') ? 'Черные победили' : 'Белые победили';
                 removeDots();
+                blackTimer.stop();
+                whiteTimer.stop();
             }
         } else if (element.classList.contains('btn__rematch')) {
             board = JSON.parse(localStorage.getItem('board'));
@@ -1039,7 +1061,6 @@ document.querySelector('.buttons__container').addEventListener('click', function
             let draw = Array.from(document.querySelectorAll('.btn__draw_active'));
             removeClassFromCollection(draw, 'btn__draw_active');
             element.setAttribute('disabled', '');
-            element.style.visibility = 'hidden';
             gameOver = false;
             whiteMove = true;
             moveBlock.textContent = 'Ход белых';
@@ -1047,12 +1068,52 @@ document.querySelector('.buttons__container').addEventListener('click', function
             document.querySelector('.pieces__container_black').innerHTML = '';
             eatenPieces.white = [];
             eatenPieces.black = [];
+            let timerData = getTimerData();
+            window.whiteTimer = new Timer(timerData[0] * 60, timerData[1], '.timer__text_white');
+            window.blackTimer = new Timer(timerData[0] * 60, timerData[1], '.timer__text_black');
+            whiteTimer.start();
             render();
         }
-    } 
-    if (gameOver) {
-        let rematch = document.querySelector('.btn__rematch');
-        rematch.removeAttribute('disabled');
-        rematch.style.visibility = 'visible';
+    }
+    if (!gameOver) {
+        rematch.setAttribute('disabled', '');
     }
 });
+
+
+let inputTime = document.querySelector('.input__time');
+inputTime.addEventListener('input', function () {
+    if (gameOver) {
+        let value = parseInt(inputTime.value);
+    if (value && value > 0 && value <= 60) {
+        let blocks = Array.from(document.querySelectorAll('.timer__text'));
+        for (let i = 0; i < blocks.length; i++) {
+            blocks[i].textContent = value + ':00';
+        }
+        document.querySelector('.text__error_time').style.visibility = 'hidden';
+    } else {
+        document.querySelector('.text__error_time').style.visibility = 'visible';
+    }
+    }
+});
+
+let inputAdd = document.querySelector('.input__add');
+inputAdd.addEventListener('input', function () {
+    if (gameOver) {
+        let value = parseInt(inputAdd.value);
+        if (value && value >= 0 && value <= 30) {
+            let block = document.querySelector('.time__add');
+            block.textContent = value;
+            document.querySelector('.text__error_add').style.visibility = 'hidden';
+        } else {
+            document.querySelector('.text__error_add').style.visibility = 'visible';
+        }
+    }
+});
+
+function getTimerData() {
+    let time = document.querySelector('.timer__text').textContent.split(':');
+    time = time[0];
+    let timeAdd = document.querySelector('.time__add').textContent;
+    return [parseInt(time), parseInt(timeAdd)];
+}

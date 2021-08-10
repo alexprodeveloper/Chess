@@ -260,7 +260,8 @@
 .btn__rematch {
     background: rgb(66, 45, 255);
     color:rgb(203, 255, 210);
-    visibility: hidden;
+    align-self: stretch;
+    width: 100%;
 }
 
 .pieces__container {
@@ -298,4 +299,32 @@
     background: #b5b5b5;
     padding: 10px 15px;
     font-size: 25px;
+}
+
+.rematch__wrap {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.input {
+    width: 100%;
+    padding: 7px 10px;
+    box-sizing: border-box;
+}
+
+.rematch__wrap .text {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.text__error {
+    color: tomato;
+    font-size: 13px;
+    margin: 0 !important;
+    visibility: hidden;
+}
+
+.text__add {
+    margin-top: 20px;
 }
