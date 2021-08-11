@@ -156,20 +156,22 @@ document.querySelector('.game__container').addEventListener('click', function (e
                         board.e8 = '';
                     } else if (data === 'white-pawn' || data === 'black-pawn') {
                         let lastMoveInfo = localStorage.getItem('lastMove');
-                        let lastMove = lastMoveInfo.slice(2, 4);
-                        if (startId[0] !== moves[index][0] && board[moves[index]] === '') {
-                            if (data === 'white-pawn') {
-                                eatenPieces.white.push(board[lastMove]);
-                            } else if (data === 'black-pawn') {
-                                eatenPieces.black.push(board[lastMove]);
+                        if (lastMoveInfo) {
+                            let lastMove = lastMoveInfo.slice(2, 4);
+                            if (startId[0] !== moves[index][0] && board[moves[index]] === '') {
+                                if (data === 'white-pawn') {
+                                    eatenPieces.white.push(board[lastMove]);
+                                } else if (data === 'black-pawn') {
+                                    eatenPieces.black.push(board[lastMove]);
+                                }
+                                board[lastMove] = '';
                             }
-                            board[lastMove] = '';
-                        }
-                        board[startId] = '';
-                        if (board[moves[index]] !== '' && whiteMove) {
-                            eatenPieces.white.push(board[moves[index]]);
-                        } else if (board[moves[index]] !== '' && !whiteMove) {
-                            eatenPieces.black.push(board[moves[index]]);
+                            board[startId] = '';
+                            if (board[moves[index]] !== '' && whiteMove) {
+                                eatenPieces.white.push(board[moves[index]]);
+                            } else if (board[moves[index]] !== '' && !whiteMove) {
+                                eatenPieces.black.push(board[moves[index]]);
+                            }
                         }
                         board[moves[index]] = data;
                         if (data === 'white-pawn') {
@@ -1090,15 +1092,15 @@ let inputTime = document.querySelector('.input__time');
 inputTime.addEventListener('input', function () {
     if (gameOver) {
         let value = parseInt(inputTime.value);
-    if (value && value > 0 && value <= 60) {
-        let blocks = Array.from(document.querySelectorAll('.timer__text'));
-        for (let i = 0; i < blocks.length; i++) {
-            blocks[i].textContent = value + ':00';
+        if (value && value > 0 && value <= 60) {
+            let blocks = Array.from(document.querySelectorAll('.timer__text'));
+            for (let i = 0; i < blocks.length; i++) {
+                blocks[i].textContent = value + ':00';
+            }
+            document.querySelector('.text__error_time').style.visibility = 'hidden';
+        } else {
+            document.querySelector('.text__error_time').style.visibility = 'visible';
         }
-        document.querySelector('.text__error_time').style.visibility = 'hidden';
-    } else {
-        document.querySelector('.text__error_time').style.visibility = 'visible';
-    }
     }
 });
 
