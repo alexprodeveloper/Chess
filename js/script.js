@@ -296,10 +296,15 @@ document.querySelector('.game__container').addEventListener('click', function (e
     } else if (!gameOver && blackTimer.time === 0) {
         gameOver = true;
         moveBlock.textContent = 'Белые победили';
+        let btns = Array.from(document.querySelectorAll('.btn'));
+        setAttrForCollection(btns, 'disabled', '');
         rematch.removeAttribute('disabled');
     } else if (!gameOver && whiteTimer.time === 0) {
         gameOver = true;
         moveBlock.textContent = 'Черные победили';
+        rematch.removeAttribute('disabled');
+        let btns = Array.from(document.querySelectorAll('.btn'));
+        setAttrForCollection(btns, 'disabled', '');
         rematch.removeAttribute('disabled');
     }
 });
